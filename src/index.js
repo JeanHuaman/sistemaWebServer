@@ -1,8 +1,10 @@
 const morgan = require("morgan")
 const express = require("express")
+const cors = require("cors")
 
 const app = express();
 const PORT = process.env.PORT || 3000
+
 
 const routerAdministrador = require("./routes/administrador.route")
 const routerAlumno = require("./routes/alumno.route")
@@ -11,6 +13,7 @@ const routerLogin = require("./routes/login.route")
 
 app.use(morgan("dev"))
 app.use(express.json())
+app.use(cors())
 
 app.use("/administrador",routerAdministrador)
 app.use("/alumno",routerAlumno)
