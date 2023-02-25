@@ -1,12 +1,14 @@
 
 
 const { validateAdministrador } = require("../middlewares/validator/administrador");
-const administradorService = require("../services/administradorService")
+const usuarioService = require("../services/usuarioService")
+
+
 
 const getAllUsuario = async (req,res)=>{
   try{
       
-    const allUsuario = await administradorService.getAllAdministrador();
+    const allUsuario = await usuarioService.getAllUsuario();
     res.json(allUsuario)
 
   }catch(error){
@@ -88,9 +90,9 @@ const getAllUsuario = async (req,res)=>{
 // }
 
 module.exports = {
-    getAllAdministrador,
-    getAdministradorId,
-    postAdministrador,
-    putAdministrador,
-    deleteAdministrador
+  getAllUsuario,
+  // getAdministradorId,
+  // postAdministrador,
+  // putAdministrador,
+  // deleteAdministrador
 }

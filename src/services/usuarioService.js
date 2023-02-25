@@ -1,8 +1,15 @@
-const administradorData = require("../database/administradorData")
+const usuarioData = require("../database/usuarioData")
 
 const getAllUsuario = async ()=>{
-    const jsonAllUsuario = await administradorData.getAllAdministrador();
-    return jsonAllUsuario
+    const {usuarios,alumnos} = await usuarioData.getAllUsuario();
+    const resultado = usuarios.map(el=>{
+        const aux = alumnos.filter(item=>(item.id_alumno===el.id_usuario))
+        if(aux.length===0) return el
+        
+        const usuario = {...el,...{grado:aux[0].grado,seccion:aux[0].seccion}}
+        return usuario
+        })
+    return resultado
 }
 // const getAdministradorId = async (id)=>{
 //     const administrador = await administradorData.getIdAdministrador(id)
@@ -23,10 +30,10 @@ const getAllUsuario = async ()=>{
 
 
 module.exports ={
-    getAllAdministrador,
-    getAdministradorId,
-    postAdministrador,
-    putAdministrador,
-    deleteAdministrador
+    getAllUsuario,
+    // getAdministradorId,
+    // postAdministrador,
+    // putAdministrador,
+    // deleteAdministrador
 
 }

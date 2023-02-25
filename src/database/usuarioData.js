@@ -1,9 +1,16 @@
 import {getConnection} from "../database/database"
 
-const getAllAdministrador = async ()=>{
-    const connection = await  getConnection();
-    const result = await connection.query("SELECT * FROM administrador")
-    return result
+const getAllUsuario = async ()=>{
+    try{
+        const connection = await  getConnection();
+        const usuarios = await connection.query("SELECT * FROM usuario")
+        const alumnos = await connection.query("SELECT * FROM alumno")
+        return {usuarios,alumnos}
+    }catch(error){
+        console.log(error);
+        return error
+    }
+    
 }
 
 
@@ -32,9 +39,9 @@ const getAllAdministrador = async ()=>{
 //     return result
 // }
 module.exports = {
-    getAllAdministrador,
-    createAdministrador,
-    getIdAdministrador,
-    deleteAdministrador,
-    updateAdministrador
+    getAllUsuario,
+    // createAdministrador,
+    // getIdAdministrador,
+    // deleteAdministrador,
+    // updateAdministrador
 }
