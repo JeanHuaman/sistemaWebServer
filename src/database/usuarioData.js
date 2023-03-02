@@ -14,11 +14,17 @@ const getAllUsuario = async ()=>{
 }
 
 
-// const createAdministrador = async (administrador)=>{
-//     const connection = await  getConnection();
-//     const result = await connection.query("INSERT INTO administrador SET ?",administrador)
-//     return result
-// }
+const createUsuario = async (usuario)=>{
+    try{
+        const connection = await  getConnection();
+        const result = await connection.query(`CALL sistemaweb.create_usuario(?,?,?,?,?,?,?,?,?,?)`,[usuario.user,usuario.password,usuario.nombre,usuario.apellido,usuario.edad,usuario.email,usuario.celular,usuario.rol,usuario?.grado || "",usuario?.seccion || ""])
+        return result
+    }catch(error){
+        console.log(error);
+        return error
+    }
+    
+}
 
 // const getIdAdministrador = async (id)=>{
 //     const connection = await  getConnection();
@@ -40,7 +46,7 @@ const getAllUsuario = async ()=>{
 // }
 module.exports = {
     getAllUsuario,
-    // createAdministrador,
+    createUsuario,
     // getIdAdministrador,
     // deleteAdministrador,
     // updateAdministrador

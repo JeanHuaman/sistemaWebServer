@@ -1,6 +1,6 @@
 
 
-const { validateUsuario } = require("../middlewares/validator/administrador");
+const { validateUsuario } = require("../middlewares/validator/usuario");
 const profesorService = require("../services/profesorService")
 
 const getAllProfesores = async (req,res)=>{

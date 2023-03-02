@@ -16,6 +16,8 @@ app.use(morgan("dev"))
 app.use(express.json())
 app.use(cors())
 
+
+
 app.use("/administrador",routerAdministrador)
 app.use("/alumno",routerAlumno)
 app.use("/profesor",routerProfesor)

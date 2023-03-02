@@ -6,8 +6,8 @@ const validateJwt = helperValidateJwt()
 
 router
     .get("/",validateJwt.catchToken,usuarioController.getAllUsuario)
-    // .get("/:alumnoId",administradorController.getAdministradorId)
-    // .post("/",administradorController.postAdministrador)
+    .post("/",validateJwt.catchToken,usuarioController.createUsuario)
+    //.get("/:rol",administradorController.getAdministradorId)
     // .put("/:alumnoId",administradorController.putAdministrador)
     // .delete("/:alumnoId",administradorController.deleteAdministrador)
-module.exports = router;
+module.exports = router; 
