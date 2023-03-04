@@ -11,18 +11,18 @@ const getAllUsuario = async ()=>{
         })
     return resultado
 }
-// const getAdministradorId = async (id)=>{
-//     const administrador = await administradorData.getIdAdministrador(id)
-//     return administrador;
-// }
+const getUsuariosRol = async (rol)=>{
+    const usuarios = await usuarioData.getUsuariosRol(rol)
+    return usuarios;
+}
 const postUsuario = async (usuario)=>{
     const createUsuario = await usuarioData.createUsuario(usuario)
     return createUsuario;
 }
-// const putAdministrador = async (administrador,id)=>{
-//     const updateAdministrador = await administradorData.updateAdministrador(administrador,id)
-//     return updateAdministrador;
-// }
+const putUsuario = async (usuario)=>{
+    const updateUsuario = await usuarioData.updateUsuario(usuario)
+    return updateUsuario;
+}
 // const deleteAdministrador = async (id)=>{
 //     const deletedAdministrador = await administradorData.deleteAdministrador(id)
 //     return deletedAdministrador;
@@ -31,9 +31,9 @@ const postUsuario = async (usuario)=>{
 
 module.exports ={
     getAllUsuario,
-    // getAdministradorId,
+    getUsuariosRol,
     postUsuario,
-    // putAdministrador,
+    putUsuario,
     // deleteAdministrador
 
 }

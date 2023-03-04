@@ -15,19 +15,16 @@ const getAllUsuario = async (req,res)=>{
   }
 }
 
-// const getUsuarioId = async (req,res)=>{
-//     try{
-//       const id = req.params.administradorId
-//       if(isNaN(id)) throw {message:`El id '${id}' no es un número`}
-//       const OneAdministrador = await administradorService.getAdministradorId(id)
-      
-//       if(OneAdministrador.length == 0) throw {message:`Administrador número '${id}' no está registrado en el sistema`}
-//       res.json(OneAdministrador)
+const getUsuariosRol = async (req,res)=>{
+    try{
+      const rol = req.params.rol
+      const allUsuarioRol = await usuarioService.getUsuariosRol(rol)
+      res.json({status:200,usuarios:allUsuarioRol})
 
-//     }catch(error){
-//       res.status(400).json({status:400,...error})
-//     }
-// }
+    }catch(error){
+      res.status(400).json({status:400,...error})
+    }
+}
 
 const createUsuario = async (req,res)=>{
     try{
@@ -59,31 +56,38 @@ const createUsuario = async (req,res)=>{
       } 
 }
 
-// const putAdministrador = async (req,res)=>{
-//     try{
-//       let administrador = req.body
-//       const id = req.params.administradorId
-
-//       if(isNaN(id)) throw {message:`El id '${id}' no es un número`}
-//       const OneAdministrador = await administradorService.getAdministradorId(id)
+const putUsuario = async (req,res)=>{
+    try{
+      let usuario = req.body
+      const {id_usuario} = usuario
+      console.log(usuario);
+      if(Object.entries(usuario).length === 0) throw {message:"Error, el request está vacio"}
+      if(isNaN(id_usuario) || id_usuario===null) throw {message:`El id '${id_usuario}' no es un número`}
       
-//       if(OneAdministrador.length == 0) throw {message:`Administrador número '${id}' no está registrado en el sistema`}
-      
-//       const {error,value} = validateAdministrador(administrador)
-        
-//         if(error){
-//             let errorMessage=""
-//             errorMessage = errorMessage + error.details.map(el=>el.message)
-//             throw {message:errorMessage}
-//         }
+      let errorGeneral=null
+       
 
-//       await administradorService.putAdministrador(administrador,id)
+        if(usuario.rol === "alumno"){
+         const {error} = validateAlumno(usuario)
+         errorGeneral = error
+        } else{
+          const {error} = validateUsuario(usuario)
+          errorGeneral = error
+        }
         
-//       res.json({messages : "Administrador actualizado correctamente",administrador})
-//     }catch(error){
-//       res.status(400).json({status:400,...error})
-//     }
-// }
+        if(errorGeneral){
+            let ErrorMessage=""
+            ErrorMessage = ErrorMessage + errorGeneral.details.map(el=>el.message)           
+            throw {message:ErrorMessage}
+        }
+      
+     await usuarioService.putUsuario(usuario)
+    
+     res.json({status:200,message:"Usuario actualizado correctamente"})
+    }catch(error){
+      res.status(400).json({status:400,...error})
+    }
+}
 
 // const deleteAdministrador = async (req,res)=>{
 //     try{
@@ -103,7 +107,8 @@ const createUsuario = async (req,res)=>{
 module.exports = {
   getAllUsuario,
   createUsuario,
+  getUsuariosRol,
   // postAdministrador,
-  // putAdministrador,
+  putUsuario,
   // deleteAdministrador
 }

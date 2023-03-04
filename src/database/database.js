@@ -4,7 +4,7 @@ import {configData} from "./../config"
 
 const getConnection = ()=>{
     const connection = mysql.createPool({
-        connectionLimit:100,
+        connectionLimit:20,
         host:configData.host,
         database:configData.database,
         user:configData.user,
