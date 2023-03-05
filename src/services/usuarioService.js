@@ -23,10 +23,10 @@ const putUsuario = async (usuario)=>{
     const updateUsuario = await usuarioData.updateUsuario(usuario)
     return updateUsuario;
 }
-// const deleteAdministrador = async (id)=>{
-//     const deletedAdministrador = await administradorData.deleteAdministrador(id)
-//     return deletedAdministrador;
-// }
+const deleteUsuario = async (usuarioId,rol)=>{
+    const deletedUsuario = await usuarioData.deleteUsuario(usuarioId,rol)
+    return deletedUsuario;
+}
 
 
 module.exports ={
@@ -34,6 +34,5 @@ module.exports ={
     getUsuariosRol,
     postUsuario,
     putUsuario,
-    // deleteAdministrador
-
+    deleteUsuario
 }

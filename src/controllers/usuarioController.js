@@ -49,7 +49,7 @@ const createUsuario = async (req,res)=>{
         const respuestaBD = await usuarioService.postUsuario(usuario)
         const id_usuario = respuestaBD[0]["0"].valor
         if(id_usuario===-1) throw {message:"Usuario ya está registrado",id_usuario}
-        res.json({status:200,message:"Administrador creado exitosamente",id_usuario})
+        res.json({status:200,message:"Usuario creado exitosamente",id_usuario})
     }catch(error){
       console.log(error);
       res.status(400).json({status:400,...error})
@@ -89,26 +89,24 @@ const putUsuario = async (req,res)=>{
     }
 }
 
-// const deleteAdministrador = async (req,res)=>{
-//     try{
-//        const id = req.params.administradorId
-//       if(isNaN(id)) throw {message:`El id '${id}' no es un número`}
-//       const OneAdministrador = await administradorService.getAdministradorId(id)
-      
-//       if(OneAdministrador.length == 0) throw {message:`Administrador número '${id}' no está registrado en el sistema`}
-
-//       await administradorService.deleteAdministrador(id)
-//       res.json({status:200,message:"Administrador eliminado exitosamente"})
-//     }catch(error){
-//       res.status(400).json({status:400,...error})
-//     }
-// }
+const deleteUsuario = async (req,res)=>{
+    try{
+      const usuariosPermitidos=["alumno","administrador","docente"]
+       const {usuarioId,rol} = req.params
+       if(!usuariosPermitidos.includes(rol)) throw {message:`'${rol}' no es un rol permitido`}
+       if(isNaN(usuarioId) || usuarioId===null) throw {message:`El id '${usuarioId}' no es un número`}
+    
+      await usuarioService.deleteUsuario(usuarioId,rol)
+      res.json({status:200,message:"Usuario eliminado exitosamente"})
+    }catch(error){
+      res.status(400).json({status:400,...error})
+    }
+}
 
 module.exports = {
   getAllUsuario,
   createUsuario,
   getUsuariosRol,
-  // postAdministrador,
   putUsuario,
-  // deleteAdministrador
+  deleteUsuario
 }

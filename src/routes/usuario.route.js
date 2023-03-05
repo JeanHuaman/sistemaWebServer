@@ -9,5 +9,5 @@ router
     .post("/",validateJwt.catchToken,usuarioController.createUsuario)
     .get("/:rol",validateJwt.catchToken,usuarioController.getUsuariosRol)
     .put("/",validateJwt.catchToken,usuarioController.putUsuario)
-    // .delete("/:alumnoId",administradorController.deleteAdministrador)
+    .delete("/:rol/:usuarioId",validateJwt.catchToken,usuarioController.deleteUsuario)
 module.exports = router; 

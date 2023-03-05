@@ -36,23 +36,31 @@ const getUsuariosRol = async (rol)=>{
     }
 }
 
-// const deleteAdministrador = async (id)=>{
-//     const connection = await  getConnection();
-//     const result = await connection.query("DELETE FROM administrador WHERE id_administrador = ?",id)
-//     console.log(result);
-//     return result
-// }
+const deleteUsuario = async (usuarioId,rol)=>{
+    try {
+        const connection = await  getConnection();
+        const result = await connection.query("CALL eliminar_usuario(?,?)",[rol,usuarioId])
+        return result   
+    } catch (error) {
+        return error 
+    }
+    
+}
 
 const updateUsuario = async (usuario)=>{
-    const connection = await  getConnection();
-    const result = await connection.query("CALL actualizar_usuario(?,?,?,?,?,?,?,?,?,?,?)",[usuario.id_usuario,usuario.user,usuario.password,usuario.nombre,usuario.apellido,usuario.edad,usuario.email,usuario.celular,usuario.rol,usuario?.grado || "",usuario?.seccion || ""])
+    try {
+        const connection = await  getConnection();
+        const result = await connection.query("CALL actualizar_usuario(?,?,?,?,?,?,?,?,?,?,?)",[usuario.id_usuario,usuario.user,usuario.password,usuario.nombre,usuario.apellido,usuario.edad,usuario.email,usuario.celular,usuario.rol,usuario?.grado || "",usuario?.seccion || ""])  
+        return result  
+    } catch (error) {
+        return error 
+    }
     
-    return result
 }
 module.exports = {
     getAllUsuario,
     createUsuario,
     getUsuariosRol,
-    // deleteAdministrador,
+    deleteUsuario,
     updateUsuario
 }
