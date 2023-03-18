@@ -8,6 +8,7 @@ const cursoService = require("../services/cursoService")
 const getAllCurso = async (req,res)=>{
   try{
     const allCurso = await cursoService.getAllCurso();
+    console.log(allCurso);
     res.json({status:200,cursos:allCurso})
   }catch(error){
     res.status(400).json({status:400,...error})
@@ -29,6 +30,7 @@ const createCurso = async (req,res)=>{
     try{
         let curso = req.body
         
+
         if(Object.entries(curso).length === 0) throw {message:"Error, el request está vacio"}
 
         const {error} = validateCurso(curso)
