@@ -8,23 +8,21 @@ const cursoService = require("../services/cursoService")
 const getAllCurso = async (req,res)=>{
   try{
     const allCurso = await cursoService.getAllCurso();
-    console.log(allCurso);
     res.json({status:200,cursos:allCurso})
   }catch(error){
     res.status(400).json({status:400,...error})
   }
 }
 
-// const getUsuariosRol = async (req,res)=>{
-//     try{
-//       const rol = req.params.rol
-//       const allUsuarioRol = await usuarioService.getUsuariosRol(rol)
-//       res.json({status:200,usuarios:allUsuarioRol})
+const getCursos = async (req,res)=>{
+    try{
+      const allCurso = await cursoService.getCursos();
+      res.json({status:200,cursos:allCurso})
 
-//     }catch(error){
-//       res.status(400).json({status:400,...error})
-//     }
-// }
+    }catch(error){
+      res.status(400).json({status:400,...error})
+    }
+}
 
 const createCurso = async (req,res)=>{
     try{
@@ -87,7 +85,7 @@ const deleteCurso = async (req,res)=>{
 module.exports = {
     getAllCurso,
     createCurso,
-//   getUsuariosRol,
+  getCursos,
   putCurso,
   deleteCurso
 }

@@ -11,7 +11,16 @@ const getAllCurso= async ()=>{
     
 }
 
-
+const getCursos= async ()=>{
+    try{
+        const connection = await  getConnection();
+        const cursos = await connection.query("select id_curso, nombre from curso")
+        return cursos
+    }catch(error){
+        return error
+    }
+    
+}
 const createCurso = async (curso)=>{
     try{
         const connection = await  getConnection();
@@ -35,16 +44,7 @@ const createCurso = async (curso)=>{
     }   
 }
 
-// const getUsuariosRol = async (rol)=>{
-//     try{
-//     const connection = await  getConnection();
-//     const result = await connection.query("CALL obtener_usuarios(?)",rol)
-//     const lista = [...result[0]]
-//     return lista
-//     }catch(error){
-//         return error
-//     }
-// }
+
 
 const deleteCurso = async (cursoId)=>{
     try {
@@ -70,7 +70,7 @@ const updateCurso = async (curso)=>{
 module.exports = {
     getAllCurso,
     createCurso,
-    // getUsuariosRol,
+    getCursos,
     deleteCurso,
     updateCurso
 }

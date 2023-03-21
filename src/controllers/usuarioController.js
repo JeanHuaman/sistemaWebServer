@@ -9,6 +9,7 @@ const usuarioService = require("../services/usuarioService")
 const getAllUsuario = async (req,res)=>{
   try{
     const allUsuario = await usuarioService.getAllUsuario();
+    // console.log(allUsuario);
     res.json({status:200,usuarios:allUsuario})
   }catch(error){
     res.status(400).json({status:400,...error})

@@ -3,9 +3,8 @@ import {getConnection} from "../database/database"
 const getAllUsuario = async ()=>{
     try{
         const connection = await  getConnection();
-        const usuarios = await connection.query("SELECT * FROM usuario")
-        const alumnos = await connection.query("SELECT * FROM alumno")
-        return {usuarios,alumnos}
+        const usuarios = await connection.query("CALL get_all_usuarios()")
+        return usuarios
     }catch(error){
         console.log(error);
         return error

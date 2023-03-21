@@ -1,15 +1,31 @@
 const usuarioData = require("../database/usuarioData")
 
 const getAllUsuario = async ()=>{
-    const {usuarios,alumnos} = await usuarioData.getAllUsuario();
-    const resultado = usuarios.map(el=>{
-        const aux = alumnos.filter(item=>(item.id_alumno===el.id_usuario))
-        if(aux.length===0) return el
+    try {
+    const res= await usuarioData.getAllUsuario();
+    const usuarios =[...res[0]]
+    
+    const usuariosFinales = usuarios.map(usuario=>{
+        if(usuario.rol!=="alumno"){
+            delete usuario.grado
+            delete usuario.seccion
+            return usuario
+        }else{
+            return usuario
+        }
+    })
+    // const resultado = usuarios.map(el=>{
+    //     const aux = alumnos.filter(item=>(item.id_alumno===el.id_usuario))
+    //     if(aux.length===0) return el
         
-        const usuario = {...el,...{grado:aux[0].grado,seccion:aux[0].seccion}}
-        return usuario
-        })
-    return resultado
+    //     const usuario = {...el,...{grado:aux[0].grado,seccion:aux[0].seccion}}
+    //     return usuario
+    //     })
+    return usuariosFinales
+    } catch (error) {
+        
+    }
+    
 }
 const getUsuariosRol = async (rol)=>{
     const usuarios = await usuarioData.getUsuariosRol(rol)

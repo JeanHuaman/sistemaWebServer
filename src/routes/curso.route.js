@@ -5,7 +5,8 @@ const cursoController = require("../controllers/cursoController")
 const validateJwt = helperValidateJwt()
 
 router
-    .get("/",validateJwt.catchToken,cursoController.getAllCurso)
+    .get("/capacidades",validateJwt.catchToken,cursoController.getAllCurso)
+    .get("/",validateJwt.catchToken,cursoController.getCursos)
     .post("/",validateJwt.catchToken,cursoController.createCurso)
     // .get("/:rol",validateJwt.catchToken,usuarioController.getUsuariosRol)
     .put("/",validateJwt.catchToken,cursoController.putCurso)

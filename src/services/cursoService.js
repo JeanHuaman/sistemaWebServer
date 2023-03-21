@@ -60,10 +60,15 @@ const getAllCurso = async ()=>{
     
     
 }
-// const getUsuariosRol = async (rol)=>{
-//     const usuarios = await usuarioData.getUsuariosRol(rol)
-//     return usuarios;
-// }
+const getCursos = async ()=>{
+    try {
+        const cursos = await cursoData.getCursos()
+        return cursos; 
+    } catch (error) {
+        return error
+    }
+    
+}
 const postCurso = async (curso)=>{
     try {
         const createCurso = await cursoData.createCurso(curso)
@@ -85,7 +90,7 @@ const deleteCurso = async (cursoId)=>{
 
 module.exports ={
     getAllCurso,
-    // getUsuariosRol,
+    getCursos,
     postCurso,
     putCurso,
     deleteCurso
