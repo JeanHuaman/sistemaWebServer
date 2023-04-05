@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 3000
 const routerLogin = require("./routes/login.route")
 const routerUsuario = require("./routes/usuario.route")
 const routerCurso = require("./routes/curso.route")
+const routerAsignarCurso = require("./routes/asignarcurso.route")
 
 app.use(morgan("dev"))
 app.use(express.json())
@@ -19,6 +20,7 @@ app.use(cors())
 app.use("/login",routerLogin)
 app.use("/usuario",routerUsuario)
 app.use("/curso",routerCurso) 
+app.use("/asignarcurso",routerAsignarCurso)
 
 app.listen(PORT,(req,res)=>{
     console.log("Server listening on port " + PORT);

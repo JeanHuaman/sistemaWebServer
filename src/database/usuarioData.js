@@ -16,7 +16,7 @@ const getAllUsuario = async ()=>{
 const createUsuario = async (usuario)=>{
     try{
         const connection = await  getConnection();
-        const result = await connection.query(`CALL create_usuario(?,?,?,?,?,?,?,?,?,?)`,[usuario.user,usuario.password,usuario.nombre,usuario.apellido,usuario.edad,usuario.email,usuario.celular,usuario.rol,usuario?.grado || "",usuario?.seccion || ""])
+        const result = await connection.query(`CALL create_usuario(?,?,?,?,?,?,?,?,?,?,?)`,[usuario.user,usuario.password,usuario.nombre,usuario.apellido,usuario.edad,usuario.email,usuario.celular,usuario.rol,usuario?.grado || "",usuario?.seccion || "",usuario?.ciclo || ""])
         return result
     }catch(error){
         return error

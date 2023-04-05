@@ -9,6 +9,7 @@ const getAllUsuario = async ()=>{
         if(usuario.rol!=="alumno"){
             delete usuario.grado
             delete usuario.seccion
+            delete usuario.ciclo
             return usuario
         }else{
             return usuario

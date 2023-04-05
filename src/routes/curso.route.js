@@ -8,7 +8,6 @@ router
     .get("/capacidades",validateJwt.catchToken,cursoController.getAllCurso)
     .get("/",validateJwt.catchToken,cursoController.getCursos)
     .post("/",validateJwt.catchToken,cursoController.createCurso)
-    // .get("/:rol",validateJwt.catchToken,usuarioController.getUsuariosRol)
     .put("/",validateJwt.catchToken,cursoController.putCurso)
     .delete("/:cursoId",validateJwt.catchToken,cursoController.deleteCurso)
 module.exports = router; 

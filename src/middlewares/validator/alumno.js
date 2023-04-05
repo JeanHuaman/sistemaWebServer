@@ -15,7 +15,8 @@ const alumnoSchema = Joi.object({
     celular : Joi.number().min(0).required().allow(""),
     rol : Joi.string().required().pattern(new RegExp('^[a-zA-ZñÑ]+$')),
     grado: Joi.number().required().min(1).max(6),
-    seccion : Joi.string().required().pattern(new RegExp('^[ABC]{1}$'))
+    seccion : Joi.string().required().pattern(new RegExp('^[ABC]{1}$')),
+    ciclo:Joi.string().required().pattern(new RegExp('^(primaria|secundaria)$'))
 })
 
 exports.validateAlumno = validator(alumnoSchema)
