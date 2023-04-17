@@ -46,13 +46,10 @@ const createCursoAsignado = async (cursoAsignado)=>{
 
 const deleteCursoAsignado = async (datos)=>{
     try {
-        console.log("Llegué a la data");
-        console.log(datos);
         const connection = await  getConnection();
         const result = await connection.query("call delete_cursoAsignado(?,?,?,?,?)",[datos.id_curso,datos.id_docente,datos.grado,datos.seccion,datos.ciclo])
         return result   
     } catch (error) {
-        console.log(error);
         return error 
     }
     

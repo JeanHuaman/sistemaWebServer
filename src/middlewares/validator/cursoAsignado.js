@@ -6,7 +6,7 @@ schema.validate(payload,{abortEarly:false})
 
 const cursoAsignadoSchema = Joi.object({
     id_curso:Joi.number().required().min(0),
-    nombre_curso : Joi.string().required().pattern(new RegExp('^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\\s]+$')),
+    nombre_curso : Joi.string().required().pattern(new RegExp('^[A-Za-z0-9ÑñÁáÉéÍíÓóÚúÜü\\s]+$')),
     id_docente : Joi.number().required().min(0),
     nombre_docente : Joi.string().required().pattern(new RegExp('^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\\s]+$')),
     grado:Joi.number().required().min(1).max(6),

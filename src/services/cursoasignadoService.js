@@ -94,10 +94,6 @@ const postCursoAsignado = async (cursoAsignado)=>{
     }
     
 }
-// const putCurso = async (curso)=>{
-//     const updateCurso = await cursoData.updateCurso(curso)
-//     return updateCurso;
-// }
 const deleteCursoAsignado = async (datos)=>{
     const deleteCurso = await cursoAsignadoData.deleteCursoAsignado(datos)
     return deleteCurso;
@@ -108,6 +104,5 @@ module.exports ={
     getAllCursosAsignados,
     getAllCursosAsignadosId,
     postCursoAsignado,
-    // putCurso,
     deleteCursoAsignado
 }

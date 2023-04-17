@@ -54,7 +54,6 @@ const createAsignarCurso = async (req,res)=>{
 const deleteCursoAsignado = async (req,res)=>{
     try{
       const datos =req.query;
-      // if(isNaN(cursoId) || cursoId===null) throw {message:`El id '${cursoId}' no es un número`}
     
       await cursoasignadoService.deleteCursoAsignado(datos)
       res.json({status:200,message:"Curso eliminado exitosamente"})

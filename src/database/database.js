@@ -18,6 +18,7 @@ if(getConnection()){console.log("Conexion a la BD");}
     else{console.log("ERROR al conectarse a la BD");}
 
 
+
 module.exports ={
     getConnection
 }
