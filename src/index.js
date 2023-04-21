@@ -12,6 +12,7 @@ const routerUsuario = require("./routes/usuario.route")
 const routerCurso = require("./routes/curso.route")
 const routerAsignarCurso = require("./routes/asignarcurso.route")
 const routerForo = require("./routes/foro.route")
+const routeRegistro = require("./routes/registro.route")
 
 app.use(morgan("dev"))
 app.use(express.json())
@@ -23,6 +24,7 @@ app.use("/usuario",routerUsuario)
 app.use("/curso",routerCurso) 
 app.use("/asignarcurso",routerAsignarCurso)
 app.use("/foro",routerForo)
+app.use("/registro",routeRegistro)
 
 app.listen(PORT,(req,res)=>{
     console.log("Server listening on port " + PORT);

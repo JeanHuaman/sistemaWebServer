@@ -2,8 +2,10 @@ import {getConnection} from "../database/database"
 
 const getAllCursosAsignados= async ()=>{
     try{
-        const connection = await  getConnection();
+        const globalPool = await  getConnection();
+        let connection = await globalPool.getConnection()
         const cursos = await connection.query("call obtener_cursosAsignados()")
+        connection.release()
         return cursos[0]
     }catch(error){
         return error
@@ -13,8 +15,10 @@ const getAllCursosAsignados= async ()=>{
 
 const getAllCursosAsignadosId= async (id)=>{
     try{
-        const connection = await  getConnection();
+        const globalPool = await  getConnection();
+        let connection = await globalPool.getConnection()
         const cursos = await connection.query("call obtener_cursoAsignado_idUsuario(?)",id)
+        connection.release()
         return cursos[0]
     }catch(error){
         return error
@@ -23,7 +27,8 @@ const getAllCursosAsignadosId= async (id)=>{
 }
 const createCursoAsignado = async (cursoAsignado)=>{
     try{
-        const connection = await  getConnection();
+        const globalPool = await  getConnection();
+        let connection = await globalPool.getConnection()
         const {id_curso,id_docente,grado,seccion,ciclo,alumnos} = cursoAsignado
         const id_cursoAsignado = await Promise.all(
             alumnos.map(async el=>{
@@ -35,7 +40,8 @@ const createCursoAsignado = async (cursoAsignado)=>{
                 }            
             })
           )
-        
+        await connection.query(`call create_registro(?,?,?,?,?,?);`,[id_docente,id_curso,grado,seccion,ciclo,1])
+        connection.release()
         return id_cursoAsignado[0][0][0].valor
     }catch(error){
         return error
@@ -46,7 +52,8 @@ const createCursoAsignado = async (cursoAsignado)=>{
 
 const deleteCursoAsignado = async (datos)=>{
     try {
-        const connection = await  getConnection();
+        const globalPool = await  getConnection();
+        let connection = await globalPool.getConnection()
         const result = await connection.query("call delete_cursoAsignado(?,?,?,?,?)",[datos.id_curso,datos.id_docente,datos.grado,datos.seccion,datos.ciclo])
         return result   
     } catch (error) {
@@ -57,9 +64,11 @@ const deleteCursoAsignado = async (datos)=>{
 
 // const updateCurso = async (curso)=>{
 //     try {
-//         const connection = await  getConnection();
+//         const globalPool = await  getConnection();
+        // let connection = await globalPool.getConnection()
 //         const result = await connection.query("UPDATE curso SET nombre = ? WHERE id_curso = ?",[curso.nombre,curso.id_curso])  
-//         return result  
+//      connection.release()    
+    // return result  
 //     } catch (error) {
 //         return error 
 //     }

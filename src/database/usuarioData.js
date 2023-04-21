@@ -2,8 +2,10 @@ import {getConnection} from "../database/database"
 
 const getAllUsuario = async ()=>{
     try{
-        const connection = await  getConnection();
+        const globalPool = await  getConnection();
+        let connection = await globalPool.getConnection()        
         const usuarios = await connection.query("CALL get_all_usuarios()")
+        connection.release()
         return usuarios
     }catch(error){
         console.log(error);
@@ -15,8 +17,10 @@ const getAllUsuario = async ()=>{
 
 const createUsuario = async (usuario)=>{
     try{
-        const connection = await  getConnection();
+        const globalPool = await  getConnection();
+        let connection = await globalPool.getConnection()   
         const result = await connection.query(`CALL create_usuario(?,?,?,?,?,?,?,?,?,?,?)`,[usuario.user,usuario.password,usuario.nombre,usuario.apellido,usuario.edad,usuario.email,usuario.celular,usuario.rol,usuario?.grado || "",usuario?.seccion || "",usuario?.ciclo || ""])
+        connection.release()
         return result
     }catch(error){
         return error
@@ -26,10 +30,12 @@ const createUsuario = async (usuario)=>{
 
 const getUsuariosRol = async (rol)=>{
     try{
-    const connection = await  getConnection();
-    const result = await connection.query("CALL obtener_usuarios(?)",rol)
-    const lista = [...result[0]]
-    return lista
+        const globalPool = await  getConnection();
+        let connection = await globalPool.getConnection() 
+        const result = await connection.query("CALL obtener_usuarios(?)",rol)
+        connection.release()
+        const lista = [...result[0]]
+        return lista
     }catch(error){
         return error
     }
@@ -37,8 +43,10 @@ const getUsuariosRol = async (rol)=>{
 
 const deleteUsuario = async (usuarioId,rol)=>{
     try {
-        const connection = await  getConnection();
+        const globalPool = await  getConnection();
+        let connection = await globalPool.getConnection() 
         const result = await connection.query("CALL eliminar_usuario(?,?)",[rol,usuarioId])
+        connection.release()
         return result   
     } catch (error) {
         return error 
@@ -48,8 +56,10 @@ const deleteUsuario = async (usuarioId,rol)=>{
 
 const updateUsuario = async (usuario)=>{
     try {
-        const connection = await  getConnection();
-        const result = await connection.query("CALL actualizar_usuario(?,?,?,?,?,?,?,?,?,?,?)",[usuario.id_usuario,usuario.user,usuario.password,usuario.nombre,usuario.apellido,usuario.edad,usuario.email,usuario.celular,usuario.rol,usuario?.grado || "",usuario?.seccion || ""])  
+        const globalPool = await  getConnection();
+        let connection = await globalPool.getConnection() 
+        const result = await connection.query("CALL actualizar_usuario(?,?,?,?,?,?,?,?,?,?,?,?)",[usuario.id_usuario,usuario.user,usuario.password,usuario.nombre,usuario.apellido,usuario.edad,usuario.email,usuario.celular,usuario.rol,usuario?.grado || "",usuario?.seccion || "",usuario.ciclo])  
+        connection.release()
         return result  
     } catch (error) {
         return error 

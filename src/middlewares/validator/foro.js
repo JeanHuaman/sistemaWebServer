@@ -11,7 +11,7 @@ const foroSchema = Joi.object({
     descripcion:Joi.string().required().pattern(new RegExp('^.{1,255}$')),
     fecha_creacion : Joi.string().required().pattern(new RegExp('^.{1,55}$')),
     fecha_fin : Joi.string().required().pattern(new RegExp('^.{1,55}$')),
-    nombre_foro : Joi.string().required().pattern(new RegExp('^.{1,255}$')),
+    nombre_foro : Joi.string().required().pattern(new RegExp('^.{1,100}$')),
     grado: Joi.number().required().min(1).max(6),
     seccion : Joi.string().required().pattern(new RegExp('^[ABC]{1}$')),
     ciclo:Joi.string().required().pattern(new RegExp('^(primaria|secundaria)$')),

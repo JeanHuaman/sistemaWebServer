@@ -61,7 +61,6 @@ const putUsuario = async (req,res)=>{
     try{
       let usuario = req.body
       const {id_usuario} = usuario
-      console.log(usuario);
       if(Object.entries(usuario).length === 0) throw {message:"Error, el request está vacio"}
       if(isNaN(id_usuario) || id_usuario===null) throw {message:`El id '${id_usuario}' no es un número`}
       

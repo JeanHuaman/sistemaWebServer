@@ -2,8 +2,10 @@ import {getConnection} from "../database/database"
 
 const getAllCurso= async ()=>{
     try{
-        const connection = await  getConnection();
+        const globalPool = await  getConnection();
+        let connection = await globalPool.getConnection()
         const cursos = await connection.query("CALL obtener_cursos()")
+        connection.release()
         return cursos
     }catch(error){
         return error
@@ -13,8 +15,10 @@ const getAllCurso= async ()=>{
 
 const getCursos= async ()=>{
     try{
-        const connection = await  getConnection();
+        const globalPool = await  getConnection();
+        let connection = await globalPool.getConnection()
         const cursos = await connection.query("select id_curso, nombre from curso")
+        connection.release()
         return cursos
     }catch(error){
         return error
@@ -23,7 +27,8 @@ const getCursos= async ()=>{
 }
 const createCurso = async (curso)=>{
     try{
-        const connection = await  getConnection();
+        const globalPool = await  getConnection();
+        let connection = await globalPool.getConnection()
         const result = await connection.query(`CALL create_curso(?);`,curso.nombre)
         const id_curso = await result[0][0].valor
         curso.capacidades.forEach(async el => {
@@ -38,6 +43,7 @@ const createCurso = async (curso)=>{
                 return error
             }
         });
+        connection.release()
         return id_curso
     }catch(error){
         return error
@@ -48,8 +54,10 @@ const createCurso = async (curso)=>{
 
 const deleteCurso = async (cursoId)=>{
     try {
-        const connection = await  getConnection();
+        const globalPool = await  getConnection();
+        let connection = await globalPool.getConnection()
         const result = await connection.query("CALL delete_curso(?);",cursoId)
+        connection.release()
         return result   
     } catch (error) {
         return error 
@@ -59,8 +67,10 @@ const deleteCurso = async (cursoId)=>{
 
 const updateCurso = async (curso)=>{
     try {
-        const connection = await  getConnection();
+        const globalPool = await  getConnection();
+        let connection = await globalPool.getConnection()
         const result = await connection.query("UPDATE curso SET nombre = ? WHERE id_curso = ?",[curso.nombre,curso.id_curso])  
+        connection.release()
         return result  
     } catch (error) {
         return error 
