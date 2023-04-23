@@ -14,6 +14,15 @@ const getAllCurso = async (req,res)=>{
   }
 }
 
+const getAllCursoPorId = async (req,res)=>{
+  try{
+    const {cursoId} = req.params
+    const capacidadCursoPorId = await cursoService.getAllCursoPorId(cursoId);
+    res.json({status:200,curso:capacidadCursoPorId})
+  }catch(error){
+    res.status(400).json({status:400,...error})
+  }
+}
 const getCursos = async (req,res)=>{
     try{
       const allCurso = await cursoService.getCursos();
@@ -27,7 +36,6 @@ const getCursos = async (req,res)=>{
 const createCurso = async (req,res)=>{
     try{
         let curso = req.body
-        
 
         if(Object.entries(curso).length === 0) throw {message:"Error, el request está vacio"}
 
@@ -84,6 +92,7 @@ const deleteCurso = async (req,res)=>{
 
 module.exports = {
     getAllCurso,
+    getAllCursoPorId,
     createCurso,
   getCursos,
   putCurso,

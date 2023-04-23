@@ -13,6 +13,19 @@ const getAllCurso= async ()=>{
     
 }
 
+const getAllCursoPorId= async (cursoId)=>{
+    try{
+        const globalPool = await  getConnection();
+        let connection = await globalPool.getConnection()
+        const cursos = await connection.query("CALL obtener_curso_capacidad_idCurso(?)",cursoId)
+        connection.release()
+        return cursos
+    }catch(error){
+        return error
+    }
+    
+
+}
 const getCursos= async ()=>{
     try{
         const globalPool = await  getConnection();
@@ -27,6 +40,8 @@ const getCursos= async ()=>{
 }
 const createCurso = async (curso)=>{
     try{
+        console.log(curso);
+        console.log(curso.capacidades[0].subcapacidades);
         const globalPool = await  getConnection();
         let connection = await globalPool.getConnection()
         const result = await connection.query(`CALL create_curso(?);`,curso.nombre)
@@ -79,6 +94,7 @@ const updateCurso = async (curso)=>{
 }
 module.exports = {
     getAllCurso,
+    getAllCursoPorId,
     createCurso,
     getCursos,
     deleteCurso,

@@ -14,15 +14,17 @@ const registroService = require("../services/registroService")
 //   }
 // }
 
-// const getCursos = async (req,res)=>{
-//     try{
-//       const allCurso = await cursoService.getCursos();
-//       res.json({status:200,cursos:allCurso})
+const getRegistroDelDocente = async (req,res)=>{
+    try{
+      const datos = req.query
+      console.log(datos);
+      const registro = await registroService.getRegistroDelDocente(datos);
+      res.json({status:200,registro})
 
-//     }catch(error){
-//       res.status(400).json({status:400,...error})
-//     }
-// }
+    }catch(error){
+      res.status(400).json({status:400,...error})
+    }
+}
 
 const createRegistro = async (req,res)=>{
     try{
@@ -85,7 +87,7 @@ const createRegistro = async (req,res)=>{
 module.exports = {
 //     getAllCurso,
     createRegistro,
-//   getCursos,
+  getRegistroDelDocente,
 //   putCurso,
 //   deleteCurso
 }

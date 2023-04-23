@@ -14,6 +14,16 @@ const getCursosAsignados = async (req,res)=>{
   }
 }
 
+const getCursoAsignadoIdUserIdCurso = async (req,res)=>{
+  try{
+    const {id_usuario,id_curso} = req.query
+    const curso_asignado = await cursoasignadoService.getAllCursoAsignadoPorIdUserIdCurso(id_usuario,id_curso);
+    res.json({status:200,curso_asignado})
+  }catch(error){
+    res.status(400).json({status:400,...error})
+  }
+}
+
 const getCursosAsignadosId = async (req,res)=>{
     try{
       const id_usuario = req.params.id_usuario
@@ -64,8 +74,8 @@ const deleteCursoAsignado = async (req,res)=>{
 
 module.exports = {
     getCursosAsignados,
+  getCursoAsignadoIdUserIdCurso,
     createAsignarCurso,
     getCursosAsignadosId,
-  // putCursoAsignado,
   deleteCursoAsignado
 }

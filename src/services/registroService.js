@@ -60,15 +60,16 @@ const registroData = require("../database/registroData")
     
     
 // }
-// const getCursos = async ()=>{
-//     try {
-//         const cursos = await cursoData.getCursos()
-//         return cursos; 
-//     } catch (error) {
-//         return error
-//     }
+
+const getRegistroDelDocente = async (datos)=>{
+    try {
+        const registro = await registroData.getRegistroDelDocente(datos)
+        return registro; 
+    } catch (error) {
+        return error
+    }
     
-// }
+}
 const postRegistro = async (registro)=>{
     try {
         const createRegistro = await registroData.createRegistro(registro)
@@ -90,7 +91,7 @@ const postRegistro = async (registro)=>{
 
 module.exports ={
     // getAllCurso,
-    // getCursos,
+    getRegistroDelDocente,
     postRegistro,
     // putCurso,
     // deleteCurso

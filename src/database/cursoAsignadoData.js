@@ -25,6 +25,21 @@ const getAllCursosAsignadosId= async (id)=>{
     }
     
 }
+
+
+const getAllCursoAsignadoIdUserIdCurso= async (id_usuario,id_curso)=>{
+    try{
+        const globalPool = await  getConnection();
+        let connection = await globalPool.getConnection()
+        const cursos = await connection.query("CALL obtener_cursoAsignado_idUsuario_idCurso(?,?);",[id_usuario,id_curso])
+        connection.release()
+        return cursos[0]
+    }catch(error){
+        return error
+    }
+    
+}
+
 const createCursoAsignado = async (cursoAsignado)=>{
     try{
         const globalPool = await  getConnection();
@@ -62,22 +77,10 @@ const deleteCursoAsignado = async (datos)=>{
     
 }
 
-// const updateCurso = async (curso)=>{
-//     try {
-//         const globalPool = await  getConnection();
-        // let connection = await globalPool.getConnection()
-//         const result = await connection.query("UPDATE curso SET nombre = ? WHERE id_curso = ?",[curso.nombre,curso.id_curso])  
-//      connection.release()    
-    // return result  
-//     } catch (error) {
-//         return error 
-//     }
-    
-// }
 module.exports = {
     getAllCursosAsignados,
     createCursoAsignado,
     getAllCursosAsignadosId,
     deleteCursoAsignado,
-    // updateCurso
+    getAllCursoAsignadoIdUserIdCurso
 }
