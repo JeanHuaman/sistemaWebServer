@@ -5,14 +5,15 @@ const registroService = require("../services/registroService")
 
 
 
-// const getAllCurso = async (req,res)=>{
-//   try{
-//     const allCurso = await cursoService.getAllCurso();
-//     res.json({status:200,cursos:allCurso})
-//   }catch(error){
-//     res.status(400).json({status:400,...error})
-//   }
-// }
+const getNotasRegistro = async (req,res)=>{
+  try{
+    const {id_registro} = req.params
+    const allNotasRegistro = await registroService.getallNotasRegistro(id_registro);
+    res.json({status:200,allNotasRegistro})
+  }catch(error){
+    res.status(400).json({status:400,...error})
+  }
+}
 
 const getRegistroDelDocente = async (req,res)=>{
     try{
@@ -85,9 +86,9 @@ const createRegistro = async (req,res)=>{
 // }
 
 module.exports = {
-//     getAllCurso,
+    getNotasRegistro,
     createRegistro,
-  getRegistroDelDocente,
+    getRegistroDelDocente,
 //   putCurso,
 //   deleteCurso
 }

@@ -1,19 +1,20 @@
 import {getConnection} from "../database/database"
 
-// const getAllCurso= async ()=>{
-//     try{
-//         const connection = await  getConnection();
-//         const cursos = await connection.query("CALL obtener_cursos()")
-//         return cursos
-//     }catch(error){
-//         return error
-//     }
+const getAllRegistroNotas= async (id_registro)=>{
+    try{
+        const globalPool = await  getConnection();
+        let connection = await globalPool.getConnection()
+        const registroNotas = await connection.query("call sistemaweb.obtener_notas_registro(?)",id_registro)
+        connection.release()
+        return registroNotas[0]
+    }catch(error){
+        return error
+    }
     
-// }
+}
 
 const getRegistroDelDocente= async (datos)=>{
     try{
-        console.log(datos);
         const globalPool = await  getConnection();
         let connection = await globalPool.getConnection()
         const registro = await connection.query("call obtener_registro_delDocente(?,?,?,?,?)",[datos.id_docente,datos.id_curso,datos.grado,datos.seccion,datos.ciclo])
@@ -63,7 +64,7 @@ const createRegistro = async (registro)=>{
 module.exports = {
     getRegistroDelDocente,
     createRegistro,
-    // getCursos,
+    getAllRegistroNotas,
     // deleteCurso,
     // updateCurso
 }

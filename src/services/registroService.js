@@ -1,65 +1,88 @@
 const registroData = require("../database/registroData")
 
-// const getAllCurso = async ()=>{
-//     try {
-//         const resultado = await cursoData.getAllCurso();
-//         const cursoAux=[...resultado[0]]
-//         const cursoFinales=[]
-//         cursoAux.forEach((el,indice)=>{
-//         let isCapacidadEncontrado = false
-//         let isCursoEncontrado = false
-        
-//         const subcapacidad = 
-//             {
-//             id_subcapacidad:el.id_subcapacidad,
-//             nombre_subcapacidad:el.nombre_subcapacidad
-//             }
+const getallNotasRegistro = async (id_registro)=>{
+    try {
+        const resultado = await registroData.getAllRegistroNotas(id_registro);
+        const registroAux=[...resultado]
+        const registroNotas={
+            id_registro,
+            bimestres : []
+        }
+        registroAux.forEach((el,indice)=>{
+        let isBimestreEncontrado = false
+        let isCapacidadEncontrado = false
+        let isAlumnoEncontrado = false
+        const subcapacidad = 
+            {
+            id_subcapacidad:el.id_subcapacidad,
+            nota_subcapacidad:el.nota_subcapacidad
+            }
             
-//         const capacidad={
-//             id_capacidad : el.id_capacidad,
-//             nombre_capacidad : el.nombre_capacidad,
-//             subcapacidades : [subcapacidad]
-//         }
-//         const curso = {
-//             id_curso : el.id_curso,
-//             nombre : el.nombre,
-//             capacidades:[capacidad]
-//         }
-//         if(indice>=1)
-//         {    
-//             cursoFinales.forEach((cursoAux)=>{
-//             if(cursoAux.id_curso === el.id_curso){
-//                 isCursoEncontrado=true
-//             }
-//             if(isCursoEncontrado){
-//                 cursoAux.capacidades.forEach((elementoCapacidad)=>{
-//                 if(elementoCapacidad.id_capacidad === el.id_capacidad){
-//                     elementoCapacidad.subcapacidades.push(subcapacidad)
-//                     isCapacidadEncontrado=true
-//                     return
-//                 }
-//                 })
-//                 if(!isCapacidadEncontrado){
-//                 cursoAux.capacidades.push(capacidad)
-//                 return
-//                 }
-//             }
-//             })
-            
-//         }
-//         if(!isCursoEncontrado){    
-//             cursoFinales.push(curso)
-//         }
-//         })
+        const capacidad={
+            id_capacidad : el.id_capacidad,
+            nota_capacidad : el.nota_capacidad,
+            subcapacidades : [subcapacidad]
+        }
 
-//         console.log(cursoFinales);
-//         return cursoFinales
-//     } catch (error) {
-//         return error
-//     }
+        const alumno = {
+            id_alumno : el.id_alumno,
+            capacidades : [capacidad]
+        }
+        const bimestre = {
+            numero_bimestre : el.numero_bimestre,
+            alumnos:[alumno]
+        }
+        if(indice>=1)
+        {    
+            registroNotas.bimestres.forEach((bimestreAux)=>{
+                if(bimestreAux.numero_bimestre === el.numero_bimestre){
+                    isBimestreEncontrado=true
+                }
+
+                if(isBimestreEncontrado){
+                    bimestreAux.alumnos.forEach(alumnoAux=>{
+                        if(alumnoAux.id_alumno === el.id_alumno){
+                            isAlumnoEncontrado = true
+                        }
+
+                        if(isAlumnoEncontrado){
+                            alumnoAux.capacidades.forEach(capacidadAux=>{
+                                if(capacidadAux.id_capacidad === el.id_capacidad){
+                                    capacidadAux.subcapacidades.push(subcapacidad)
+                                    isCapacidadEncontrado = true
+                                    return
+                                }
+                            })
+                            if(!isCapacidadEncontrado)
+                            {
+                                alumnoAux.capacidades.push(capacidad)
+                                return
+                            }
+
+                        }
+
+                    })
+                    if(!isAlumnoEncontrado)
+                    {
+                        bimestreAux.alumnos.push(alumno)
+                        return
+                    } 
+                }
+            })          
+             
+        }
+        if(!isBimestreEncontrado){    
+            registroNotas.bimestres.push(bimestre)
+        } 
+        })
+        console.log(registroAux);
+        return registroNotas
+    } catch (error) {
+        return error
+    }
     
     
-// }
+}
 
 const getRegistroDelDocente = async (datos)=>{
     try {
@@ -90,7 +113,7 @@ const postRegistro = async (registro)=>{
 
 
 module.exports ={
-    // getAllCurso,
+    getallNotasRegistro,
     getRegistroDelDocente,
     postRegistro,
     // putCurso,
