@@ -5,7 +5,6 @@ const getAllForosPorCurso = async (datos)=>{
         const forosPorCurso = await foroData.getForoPorCurso(datos)
         return forosPorCurso
     } catch (error) {
-        console.log(error);
         return error
     }
 }

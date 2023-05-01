@@ -8,7 +8,6 @@ const getForoPorCurso= async (datos)=>{
         connection.release()
         return result[0]
     }catch(error){
-        console.log(error);
         return error
     }
     
@@ -33,7 +32,6 @@ const createForo = async (foro)=>{
         connection.release()
         return result[0][0].valor
     }catch(error){
-        console.log(error);
         return error
     }   
 }
@@ -46,7 +44,6 @@ const createComentarioForo = async (comentario)=>{
         connection.release()
         return result[0][0].valor
     }catch(error){
-        console.log(error);
         return error
     }   
 }

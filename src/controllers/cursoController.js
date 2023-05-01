@@ -58,7 +58,6 @@ const putCurso = async (req,res)=>{
     try{
       let curso = req.body
       const {id_curso} = curso
-      console.log(curso);
       if(Object.entries(curso).length === 0) throw {message:"Error, el request está vacio"}
       if(isNaN(id_curso) || id_curso===null) throw {message:`El id '${id_curso}' no es un número`}
       

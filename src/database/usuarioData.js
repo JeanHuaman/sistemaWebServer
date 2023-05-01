@@ -8,7 +8,6 @@ const getAllUsuario = async ()=>{
         connection.release()
         return usuarios
     }catch(error){
-        console.log(error);
         return error
     }
     

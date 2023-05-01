@@ -1,6 +1,9 @@
 
 
-const { validateCurso} = require("../middlewares/validator/curso");
+const { validateSubcapacidad} = require("../middlewares/validator/subcapacidad");
+const { validateCapacidad} = require("../middlewares/validator/capacidad");
+const { validateBimestre} = require("../middlewares/validator/bimestre");
+
 const registroService = require("../services/registroService")
 
 
@@ -18,7 +21,6 @@ const getNotasRegistro = async (req,res)=>{
 const getRegistroDelDocente = async (req,res)=>{
     try{
       const datos = req.query
-      console.log(datos);
       const registro = await registroService.getRegistroDelDocente(datos);
       res.json({status:200,registro})
 
@@ -27,6 +29,66 @@ const getRegistroDelDocente = async (req,res)=>{
     }
 }
 
+
+const guardarNotaCapacidad = async (req,res)=>{
+  try{
+      let requestNotaCapacidad = req.body
+
+      const {error} = validateCapacidad(requestNotaCapacidad)
+        
+      if(error){
+          let ErrorMessage=""
+          ErrorMessage = ErrorMessage + error.details.map(el=>el.message)           
+          throw {message:ErrorMessage}
+      }
+   
+      const id_registro_nota = await registroService.guardarNotaCapacidad(requestNotaCapacidad)
+      res.json({status:200,message:"Nota capacidad guardado.",id_registro_nota})
+  }catch(error){
+    res.status(400).json({status:400,...error})
+    } 
+}
+
+const guardarNotaSubcapacidad = async (req,res)=>{
+  try{
+      let requestNotaSubcapacidad = req.body
+      
+      console.log(requestNotaSubcapacidad);
+      const {error} = validateSubcapacidad(requestNotaSubcapacidad)
+        
+      if(error){
+          let ErrorMessage=""
+          ErrorMessage = ErrorMessage + error.details.map(el=>el.message)           
+          throw {message:ErrorMessage}
+      }
+      
+      const id_registro_nota = await registroService.guardarNotaSubcapacidad(requestNotaSubcapacidad)
+      res.json({status:200,message:"Nota subcapacidad guardado.",id_registro_nota})
+  }catch(error){
+    res.status(400).json({status:400,...error})
+    } 
+}
+
+
+const guardarNotaBimestre = async (req,res)=>{
+  try{
+      let requestNotaBimestre = req.body
+      
+
+      const {error} = validateBimestre(requestNotaBimestre)
+        
+      if(error){
+          let ErrorMessage=""
+          ErrorMessage = ErrorMessage + error.details.map(el=>el.message)           
+          throw {message:ErrorMessage}
+      }
+   
+      const id_registro_nota = await registroService.guardarNotaBimestre(requestNotaBimestre)
+      res.json({status:200,message:"Nota bimestre guardado.",id_registro_nota})
+  }catch(error){
+    res.status(400).json({status:400,...error})
+    } 
+}
 const createRegistro = async (req,res)=>{
     try{
         let registro = req.body
@@ -89,6 +151,7 @@ module.exports = {
     getNotasRegistro,
     createRegistro,
     getRegistroDelDocente,
-//   putCurso,
-//   deleteCurso
+    guardarNotaSubcapacidad,
+    guardarNotaCapacidad,
+    guardarNotaBimestre
 }

@@ -95,7 +95,8 @@ const getAllCursoAsignadoPorIdUserIdCurso = async (id_usuario,id_curso)=>{
             let encontrado=false
             const alumno={
                 id_alumno:element.id_alumno,
-                nombre_alumno: element.nombre_alumno
+                nombre_alumno: element.nombre_alumno,
+                apellido_alumno : element.apellido_alumno
             }
             const cursoAsignado = {
                 id_curso: element.id_curso,

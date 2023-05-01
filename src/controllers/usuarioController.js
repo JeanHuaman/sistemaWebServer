@@ -9,7 +9,6 @@ const usuarioService = require("../services/usuarioService")
 const getAllUsuario = async (req,res)=>{
   try{
     const allUsuario = await usuarioService.getAllUsuario();
-    // console.log(allUsuario);
     res.json({status:200,usuarios:allUsuario})
   }catch(error){
     res.status(400).json({status:400,...error})
@@ -52,7 +51,6 @@ const createUsuario = async (req,res)=>{
         if(id_usuario===-1) throw {message:"Usuario ya está registrado",id_usuario}
         res.json({status:200,message:"Usuario creado exitosamente",id_usuario})
     }catch(error){
-      console.log(error);
       res.status(400).json({status:400,...error})
       } 
 }

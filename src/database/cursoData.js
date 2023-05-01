@@ -40,8 +40,6 @@ const getCursos= async ()=>{
 }
 const createCurso = async (curso)=>{
     try{
-        console.log(curso);
-        console.log(curso.capacidades[0].subcapacidades);
         const globalPool = await  getConnection();
         let connection = await globalPool.getConnection()
         const result = await connection.query(`CALL create_curso(?);`,curso.nombre)

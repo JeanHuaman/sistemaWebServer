@@ -9,73 +9,72 @@ const getallNotasRegistro = async (id_registro)=>{
             bimestres : []
         }
         registroAux.forEach((el,indice)=>{
-        let isBimestreEncontrado = false
-        let isCapacidadEncontrado = false
-        let isAlumnoEncontrado = false
-        const subcapacidad = 
-            {
-            id_subcapacidad:el.id_subcapacidad,
-            nota_subcapacidad:el.nota_subcapacidad
-            }
-            
-        const capacidad={
-            id_capacidad : el.id_capacidad,
-            nota_capacidad : el.nota_capacidad,
-            subcapacidades : [subcapacidad]
-        }
-
-        const alumno = {
-            id_alumno : el.id_alumno,
-            capacidades : [capacidad]
-        }
-        const bimestre = {
-            numero_bimestre : el.numero_bimestre,
-            alumnos:[alumno]
-        }
-        if(indice>=1)
-        {    
-            registroNotas.bimestres.forEach((bimestreAux)=>{
-                if(bimestreAux.numero_bimestre === el.numero_bimestre){
-                    isBimestreEncontrado=true
+            let isBimestreEncontrado = false
+            let isCapacidadEncontrado = false
+            let isAlumnoEncontrado = false
+            const subcapacidad = 
+                {
+                id_subcapacidad:el.id_subcapacidad,
+                nota_subcapacidad:el.nota_subcapacidad
                 }
-
-                if(isBimestreEncontrado){
-                    bimestreAux.alumnos.forEach(alumnoAux=>{
-                        if(alumnoAux.id_alumno === el.id_alumno){
-                            isAlumnoEncontrado = true
-                        }
-
-                        if(isAlumnoEncontrado){
-                            alumnoAux.capacidades.forEach(capacidadAux=>{
-                                if(capacidadAux.id_capacidad === el.id_capacidad){
-                                    capacidadAux.subcapacidades.push(subcapacidad)
-                                    isCapacidadEncontrado = true
+                
+            const capacidad={
+                id_capacidad : el.id_capacidad,
+                nota_capacidad : el.nota_capacidad,
+                subcapacidades : [subcapacidad]
+            }
+    
+            const alumno = {
+                id_alumno : el.id_alumno,
+                nota_bimestre:el.nota_bimestre,
+                capacidades : [capacidad]
+            }
+            const bimestre = {
+                numero_bimestre : el.numero_bimestre,
+                alumnos:[alumno]
+            }
+            if(indice>=1)
+            {    
+                for(let i=0;i<registroNotas.bimestres.length;i++){
+                    if(registroNotas.bimestres[i].numero_bimestre === el.numero_bimestre){
+                        isBimestreEncontrado=true
+                    }
+    
+                    if(isBimestreEncontrado){
+                        for(let j=0;j<registroNotas.bimestres[i].alumnos.length;j++){
+                            if(registroNotas.bimestres[i].alumnos[j].id_alumno === el.id_alumno){
+                                isAlumnoEncontrado = true
+                            }
+    
+                            if(isAlumnoEncontrado){
+                                for(let k=0;k<registroNotas.bimestres[i].alumnos[j].capacidades.length;k++){
+                                    if(registroNotas.bimestres[i].alumnos[j].capacidades[k].id_capacidad === el.id_capacidad){
+                                        registroNotas.bimestres[i].alumnos[j].capacidades[k].subcapacidades.push(subcapacidad)
+                                        isCapacidadEncontrado = true
+                                        return
+                                    }
+                                }
+                                if(!isCapacidadEncontrado)
+                                {
+                                    registroNotas.bimestres[i].alumnos[j].capacidades.push(capacidad)
                                     return
                                 }
-                            })
-                            if(!isCapacidadEncontrado)
-                            {
-                                alumnoAux.capacidades.push(capacidad)
-                                return
+    
                             }
-
+    
                         }
-
-                    })
-                    if(!isAlumnoEncontrado)
-                    {
-                        bimestreAux.alumnos.push(alumno)
-                        return
-                    } 
-                }
-            })          
-             
-        }
-        if(!isBimestreEncontrado){    
-            registroNotas.bimestres.push(bimestre)
-        } 
+                        if(!isAlumnoEncontrado)
+                        {
+                            registroNotas.bimestres[i].alumnos.push(alumno)
+                            return
+                        } 
+                    }
+                }        
+            }
+            if(!isBimestreEncontrado){    
+                registroNotas.bimestres.push(bimestre)
+            } 
         })
-        console.log(registroAux);
         return registroNotas
     } catch (error) {
         return error
@@ -102,6 +101,38 @@ const postRegistro = async (registro)=>{
     }
     
 }
+
+const guardarNotaSubcapacidad = async (requestNotaSubcapacidad)=>{
+    try {
+        const id_registro_nota = await registroData.guardarNotaSubcapacidad(requestNotaSubcapacidad)
+        return id_registro_nota; 
+    } catch (error) {
+        return error
+    }
+    
+}
+
+
+const guardarNotaCapacidad = async (requestNotaCapacidad)=>{
+    try {
+        const id_registro_nota = await registroData.guardarNotaCapacidad(requestNotaCapacidad)
+        return id_registro_nota; 
+    } catch (error) {
+        return error
+    }
+    
+}
+
+
+const guardarNotaBimestre = async (requestNotaBimestre)=>{
+    try {
+        const id_registro_nota = await registroData.guardarNotaBimestre(requestNotaBimestre)
+        return id_registro_nota; 
+    } catch (error) {
+        return error
+    }
+    
+}
 // const putCurso = async (curso)=>{
 //     const updateCurso = await cursoData.updateCurso(curso)
 //     return updateCurso;
@@ -116,6 +147,7 @@ module.exports ={
     getallNotasRegistro,
     getRegistroDelDocente,
     postRegistro,
-    // putCurso,
-    // deleteCurso
+    guardarNotaSubcapacidad,
+    guardarNotaCapacidad,
+    guardarNotaBimestre
 }

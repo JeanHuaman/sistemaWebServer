@@ -29,7 +29,6 @@ const createRegistro = async (registro)=>{
     try{
         const globalPool = await  getConnection();
         let connection = await globalPool.getConnection()
-        console.log(registro);
         const result = await connection.query(`call create_registro(?,?,?,?,?,?);`,[registro.id_docente,registro.id_curso,registro.grado,registro.seccion,registro.ciclo,registro.active_registro])
         connection.release()
         return result[0][0].valor
@@ -38,6 +37,57 @@ const createRegistro = async (registro)=>{
     }   
 }
 
+const guardarNotaSubcapacidad = async (requestNotaSubcapacidad)=>{
+    try{
+        const globalPool = await  getConnection();
+        let connection = await globalPool.getConnection()
+        const id_registro_nota = await Promise.all(
+            requestNotaSubcapacidad.map(async element => {
+                return await connection.query(`call sistemaweb.guardar_nota_subcapacidad(?,?,?,?,?,?)`,[element.id_registro,element.id_alumno,element.numero_bimestre,element.id_capacidad,element.id_subcapacidad,element.nota_subcapacidad]) 
+                })
+        )        
+        connection.release()
+        return id_registro_nota[0][0][0].valor
+    }catch(error){
+        return error
+    }   
+}
+
+
+const guardarNotaCapacidad = async (requestNotaCapacidad)=>{
+    try{
+        console.log(requestNotaCapacidad);
+        const globalPool = await  getConnection();
+        let connection = await globalPool.getConnection()
+        const id_registro_nota = await Promise.all(
+            requestNotaCapacidad.map(async element => {
+                return await connection.query(`call sistemaweb.guardar_nota_capacidad(?,?,?,?,?)`,[element.id_registro,element.id_alumno,element.numero_bimestre,element.id_capacidad,element.nota_capacidad]) 
+                })
+        )        
+        connection.release()
+        return id_registro_nota[0][0][0].valor
+    }catch(error){
+        return error
+    }   
+}
+
+
+
+const guardarNotaBimestre = async (requestNotaBimestre)=>{
+    try{
+        const globalPool = await  getConnection();
+        let connection = await globalPool.getConnection()
+        const id_registro_nota = await Promise.all(
+            requestNotaBimestre.map(async element => {
+                return await connection.query(`call sistemaweb.guardar_nota_bimestre(?,?,?,?)`,[element.id_registro,element.id_alumno,element.numero_bimestre,element.nota_bimestre])
+                })
+        )        
+        connection.release()
+        return id_registro_nota[0][0][0].valor
+    }catch(error){
+        return error
+    }   
+}
 
 
 // const deleteCurso = async (cursoId)=>{
@@ -65,6 +115,7 @@ module.exports = {
     getRegistroDelDocente,
     createRegistro,
     getAllRegistroNotas,
-    // deleteCurso,
-    // updateCurso
+    guardarNotaSubcapacidad,
+    guardarNotaCapacidad,
+    guardarNotaBimestre
 }

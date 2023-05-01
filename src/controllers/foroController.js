@@ -36,7 +36,6 @@ const createForo = async (req,res)=>{
             ErrorMessage = ErrorMessage + error.details.map(el=>el.message)           
             throw {message:ErrorMessage}
         }
-        console.log(foro);
        const respuesta = await foroService.postForo(foro)
        res.json({status:200,message:"Foro creado exitosamente",id_foro:respuesta})
     }catch(error){

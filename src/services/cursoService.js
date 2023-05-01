@@ -51,8 +51,6 @@ const getAllCurso = async ()=>{
             cursoFinales.push(curso)
         }
         })
-
-        console.log(cursoFinales);
         return cursoFinales
     } catch (error) {
         return error
@@ -112,8 +110,6 @@ const getAllCursoPorId = async (cursoId)=>{
             cursoFinales.push(curso)
         }
         })
-
-        console.log(cursoFinales);
         return cursoFinales[0]
     } catch (error) {
         return error
