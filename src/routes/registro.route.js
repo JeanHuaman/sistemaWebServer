@@ -11,5 +11,4 @@ router
     .post("/notaCapacidad",validateJwt.catchToken,registroController.guardarNotaCapacidad)
     .post("/notaBimestre",validateJwt.catchToken,registroController.guardarNotaBimestre)
     .post("/",validateJwt.catchToken,registroController.createRegistro)
-    // .delete("/",validateJwt.catchToken,asignarCursoController.deleteCursoAsignado)
 module.exports = router; 
