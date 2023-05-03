@@ -13,6 +13,20 @@ const getAllRegistroNotas= async (id_registro)=>{
     
 }
 
+
+const getNotasFinales= async (id_registro)=>{
+    try{
+        const globalPool = await  getConnection();
+        let connection = await globalPool.getConnection()
+        const registroNotas = await connection.query("call sistemaweb.obtener_notas_finales(?)",id_registro)
+        connection.release()
+        return registroNotas[0]
+    }catch(error){
+        return error
+    }
+    
+}
+
 const getRegistroDelDocente= async (datos)=>{
     try{
         const globalPool = await  getConnection();
@@ -53,7 +67,6 @@ const guardarNotaSubcapacidad = async (requestNotaSubcapacidad)=>{
     }   
 }
 
-
 const guardarNotaCapacidad = async (requestNotaCapacidad)=>{
     try{
         console.log(requestNotaCapacidad);
@@ -71,8 +84,6 @@ const guardarNotaCapacidad = async (requestNotaCapacidad)=>{
     }   
 }
 
-
-
 const guardarNotaBimestre = async (requestNotaBimestre)=>{
     try{
         const globalPool = await  getConnection();
@@ -89,6 +100,22 @@ const guardarNotaBimestre = async (requestNotaBimestre)=>{
     }   
 }
 
+
+const guardarNotaFinal = async (requestNotaFinal)=>{
+    try{
+        const globalPool = await  getConnection();
+        let connection = await globalPool.getConnection()
+        const id_registro_nota = await Promise.all(
+            requestNotaFinal.map(async element => {
+                return await connection.query(`call sistemaweb.guarda_nota_final(?,?,?)`,[element.id_registro,element.id_alumno,element.nota_final])
+                })
+        )        
+        connection.release()
+        return id_registro_nota[0][0][0].valor
+    }catch(error){
+        return error
+    }   
+}
 
 // const deleteCurso = async (cursoId)=>{
 //     try {
@@ -117,5 +144,7 @@ module.exports = {
     getAllRegistroNotas,
     guardarNotaSubcapacidad,
     guardarNotaCapacidad,
-    guardarNotaBimestre
+    guardarNotaBimestre,
+    guardarNotaFinal,
+    getNotasFinales
 }

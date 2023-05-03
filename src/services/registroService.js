@@ -83,6 +83,18 @@ const getallNotasRegistro = async (id_registro)=>{
     
 }
 
+
+const getNotasFinales = async (id_registro)=>{
+    try {
+        const notasFinales = await registroData.getNotasFinales(id_registro);
+        return notasFinales
+    } catch (error) {
+        return error
+    }
+    
+    
+}
+
 const getRegistroDelDocente = async (datos)=>{
     try {
         const registro = await registroData.getRegistroDelDocente(datos)
@@ -133,6 +145,16 @@ const guardarNotaBimestre = async (requestNotaBimestre)=>{
     }
     
 }
+
+const guardarNotaFinal = async (requestNotaFinal)=>{
+    try {
+        const id_registro_nota = await registroData.guardarNotaFinal(requestNotaFinal)
+        return id_registro_nota; 
+    } catch (error) {
+        return error
+    }
+    
+}
 // const putCurso = async (curso)=>{
 //     const updateCurso = await cursoData.updateCurso(curso)
 //     return updateCurso;
@@ -149,5 +171,7 @@ module.exports ={
     postRegistro,
     guardarNotaSubcapacidad,
     guardarNotaCapacidad,
-    guardarNotaBimestre
+    guardarNotaBimestre,
+    guardarNotaFinal,
+    getNotasFinales
 }

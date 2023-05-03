@@ -3,7 +3,7 @@
 const { validateSubcapacidad} = require("../middlewares/validator/subcapacidad");
 const { validateCapacidad} = require("../middlewares/validator/capacidad");
 const { validateBimestre} = require("../middlewares/validator/bimestre");
-
+const {validateNotaFinal} = require("../middlewares/validator/notafinal")
 const registroService = require("../services/registroService")
 
 
@@ -13,6 +13,16 @@ const getNotasRegistro = async (req,res)=>{
     const {id_registro} = req.params
     const allNotasRegistro = await registroService.getallNotasRegistro(id_registro);
     res.json({status:200,allNotasRegistro})
+  }catch(error){
+    res.status(400).json({status:400,...error})
+  }
+}
+
+const getNotasFinales = async (req,res)=>{
+  try{
+    const {id_registro} = req.params
+    const allNotasFinales= await registroService.getNotasFinales(id_registro);
+    res.json({status:200,allNotasFinales})
   }catch(error){
     res.status(400).json({status:400,...error})
   }
@@ -89,6 +99,26 @@ const guardarNotaBimestre = async (req,res)=>{
     res.status(400).json({status:400,...error})
     } 
 }
+
+const guardarNotaFinal = async (req,res)=>{
+  try{
+      let requestNotaFinal = req.body
+      
+
+      const {error} = validateNotaFinal(requestNotaFinal)
+        
+      if(error){
+          let ErrorMessage=""
+          ErrorMessage = ErrorMessage + error.details.map(el=>el.message)           
+          throw {message:ErrorMessage}
+      }
+   
+      const id_registro_nota = await registroService.guardarNotaFinal(requestNotaFinal)
+      res.json({status:200,message:"Nota final guardado.",id_registro_nota})
+  }catch(error){
+    res.status(400).json({status:400,...error})
+    } 
+}
 const createRegistro = async (req,res)=>{
     try{
         let registro = req.body
@@ -153,5 +183,7 @@ module.exports = {
     getRegistroDelDocente,
     guardarNotaSubcapacidad,
     guardarNotaCapacidad,
-    guardarNotaBimestre
+    guardarNotaBimestre,
+    guardarNotaFinal,
+    getNotasFinales
 }
