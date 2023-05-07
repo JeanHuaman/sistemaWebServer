@@ -20,7 +20,7 @@ const login = async (req,res)=>{
     if(userAutenticada.length==0) throw {message:`Usuario y/o contraseña inválidos`}
     
     jwt.sign({user,pass},security.secretKey,async (err,token)=>{
-        res.json({userAutenticada,token})
+        res.json({status:200,userAutenticada,token})
     })
     
   }catch(error){

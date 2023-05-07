@@ -6,6 +6,8 @@ const validateJwt = helperValidateJwt()
 
 router
     .get("/notasFinales/:id_registro",validateJwt.catchToken,registroController.getNotasFinales)
+    .get("/notasFinalPorAlumno",validateJwt.catchToken,registroController.getNotaFinalPorAlumno)
+    .get("/obtenerNotaDelAlumno",validateJwt.catchToken,registroController.getNotasDelAlumno)
     .get("/obtenerNotas/:id_registro",validateJwt.catchToken,registroController.getNotasRegistro)
     .get("/",validateJwt.catchToken,registroController.getRegistroDelDocente)
     .post("/notaFinal",validateJwt.catchToken,registroController.guardarNotaFinal)

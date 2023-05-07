@@ -18,6 +18,16 @@ const getNotasRegistro = async (req,res)=>{
   }
 }
 
+
+const getNotasDelAlumno = async (req,res)=>{
+  try{
+    const datos = req.query
+    const allNotasDelAlumno= await registroService.getNotasDelAlumno(datos);
+    res.json({status:200,allNotasDelAlumno})
+  }catch(error){
+    res.status(400).json({status:400,...error})
+  }
+}
 const getNotasFinales = async (req,res)=>{
   try{
     const {id_registro} = req.params
@@ -28,6 +38,16 @@ const getNotasFinales = async (req,res)=>{
   }
 }
 
+
+const getNotaFinalPorAlumno = async (req,res)=>{
+  try{
+    const datos = req.query
+    const notaAlumno= await registroService.getNotaFinalPorAlumno(datos);
+    res.json({status:200,notaAlumno})
+  }catch(error){
+    res.status(400).json({status:400,...error})
+  }
+}
 const getRegistroDelDocente = async (req,res)=>{
     try{
       const datos = req.query
@@ -185,5 +205,7 @@ module.exports = {
     guardarNotaCapacidad,
     guardarNotaBimestre,
     guardarNotaFinal,
-    getNotasFinales
+    getNotasFinales,
+    getNotasDelAlumno,
+    getNotaFinalPorAlumno
 }
